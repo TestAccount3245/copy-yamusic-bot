@@ -14,7 +14,7 @@ router = Router()
 async def cmd_search(message: Message) -> None:
     query = message.text.replace("/search", "", 1).strip() if message.text else ""
     if not query:
-        await message.answer("Usage: /search <query>")
+        await message.answer("Usage: /search query")
         return
 
     # TODO: call search service

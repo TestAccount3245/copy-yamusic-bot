@@ -1,7 +1,6 @@
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
-import redis.asyncio as aioredis
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -13,11 +12,17 @@ from app.core.logging import setup_logging
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     setup_logging()
 
-    app.state.redis = aioredis.from_url(settings.redis_url, decode_responses=True)
+    # Redis is optional for dev mode
+    if settings.redis_url:
+        import redis.asyncio as aioredis
+        app.state.redis = aioredis.from_url(settings.redis_url, decode_responses=True)
+    else:
+        app.state.redis = None
 
     yield
 
-    await app.state.redis.close()
+    if app.state.redis:
+        await app.state.redis.close()
 
 
 def create_app() -> FastAPI:

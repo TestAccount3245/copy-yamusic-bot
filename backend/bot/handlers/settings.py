@@ -9,7 +9,7 @@ router = Router()
 async def cmd_link(message: Message) -> None:
     token = message.text.replace("/link", "", 1).strip() if message.text else ""
     if not token:
-        await message.answer("Usage: /link <yandex_oauth_token>")
+        await message.answer("Usage: /link your_yandex_oauth_token")
         return
 
     # TODO: save token to DB via user_service
@@ -20,6 +20,6 @@ async def cmd_link(message: Message) -> None:
 async def cmd_settings(message: Message) -> None:
     await message.answer(
         "Settings:\n"
-        "• /link <token> — Link Yandex Music account\n"
+        "• /link TOKEN — Link Yandex Music account\n"
         "• Quality preference can be set in the Mini App"
     )

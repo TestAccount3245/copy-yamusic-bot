@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=(".env", "../.env"),
         env_file_encoding="utf-8",
         extra="ignore",
     )
@@ -15,11 +15,11 @@ class Settings(BaseSettings):
     # CORS — дополнительные origins для GitHub Pages и tunnel
     cors_origins: str = ""  # comma-separated, e.g. "https://user.github.io,https://xxx.trycloudflare.com"
 
-    # Database
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/yamusic"
+    # Database (dev: sqlite+aiosqlite, prod: postgresql+asyncpg)
+    database_url: str = "sqlite+aiosqlite:///./yamusic.db"
 
-    # Redis
-    redis_url: str = "redis://localhost:6379/0"
+    # Redis (optional — if empty, uses in-memory dict cache)
+    redis_url: str = ""
 
     # Storage
     upload_max_size_mb: int = 50
