@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"D:/боты скрипты/copy-yamusic-bot/backend/pyproject.toml\":*)"
+    ]
+  }
+}
